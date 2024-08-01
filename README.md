@@ -1,6 +1,12 @@
 # RL for Portfolio Pursuit
 
-The codebase accompanies our paper (ARCHIVE LINK) applying reinforcement learning ideas to portfolio pursuit in the context of insurance markets. It is designed to allow other research to build on our research, replicate our results, and use the market environment for their own work. 
+The codebase accompanies our paper (ARCHIVE LINK) applying reinforcement learning ideas to portfolio pursuit in the context of insurance markets. It is designed to allow other research to build on our research, replicate our results, and use the market environment for their own work. It is licensed under the a CC BY-NC 4.0 license. 
+
+## Motivation of the research 
+
+Our reseach focuses on applying ideas from reinforcement learning to the insurance market. We focus on what we call the *portfolio pursuit* problem. By a *portfolio*, we mean the collection of new customers that the insurer has insured over some specified time period. An insurer may have a *target portfolio*, as dictated by their longer-term goals. For example, they may want to avoid insuring too many customers, since this would lead to liquidity issues if many customers needed to be paid simultaneously. Alternatively, they may wish to establish a reputation among a specific demographic, and make generous offers to that specific demographic. Lastly, they might want to protect against correlated risk or systematic bias, and maintain a diverse portfolio. 
+
+Suppose then that the insurer has in mind a target portfolio that they would like to achieve. The porftolio pursuit problem asks: given that target portfolio, how should we adjust the offers we make the individual customers to get closer to that ideal portfolio? Our research focuses on this issue. We apply ideas from reinforcement learning to devise an algorithm for portfolio pursuit. 
 
 ## Structure of the codebase
 
@@ -18,13 +24,19 @@ The customer.py file contains the Customer class. When initialised, the customer
 
 ### Insurer file
 
-The bulk of the code is found in the insurer file. We go into detail about how our insurance agents operate in our paper (ARCHIEVE LINK). Here we briefly explain some key steps. 
+The bulk of the code is found in the insurer file. We go into detail about how our insurance agents operate in our paper (ARCHIEVE LINK). Here we briefly explain some key aspects of the insurance agents. 
 
-Insurers have three core models:
+The insurance agent can be one of three types: "Null", "Baseline", and "RL". These correspond to &sect;3.1, &sect;3.2, and &sect;3.3 respectively. The Null insurers do not implement portfolio pursuit - that is, they have no notion of a desired portfolio of customers towards which they are optimising. Instead, they optimise purely for profit.  
+
+The operational flow of a Null insurer is as follows (see &sect;3.1 of the paper). These insurers have three core models:
 1. *Market models* - these predict the behaviour of other firms within the market, for new customers.
 2. *Conversion models* - these predict the likelihood of a customer accepting a given offers, given the other market behaviour.
-3. *Bidding models* - these tell the insurer which offer to take for a new customer. 
-These models are all trained using data that the insurer generates during market interactions. 
+3. *Bidding models* - these tell the insurer which offer to take for a new customer, given the other market behaviour.  
+The conversion and market models are trained using data from the insurer's previous market interactions. We use the conversion model to compute optimal actions on which to train the bidding model. We have classes corresponding to each model; these classes essentially operate as wrappers around scikit-learn models. The wrappers ensure that the inputs and outputs to each model are the same, and log various other aspects of performance to make debugging easier. When faced with a new customer, insurers use their market model to predict the behaviour of other firms within the market. On the basis of the predicted behaviour, the insurer uses the bidding model to make the customer an offer. 
+
+The Baseline insurers (see &sect;3.2 of the paper) implement portfolio pursuit via a naive method. Offers are computed via the operational flow of Null insurers. A multiplier is then applied to the offers according to how appealing the customer is, from the perspective of the portfolio. The multipler is found as follows. We look at each category that the customer falls into that are relevant to the insurer's portfolio. For each of those categories, we ask whether the insurer wants to increase or decrease the number of customers they get in that category. If they want to increase the number, they lower the customer's offer. Otherwise, they lower the customer's offer. 
+
+The RL insurers (see &sect;3.3 of the paper) use a reinforcement learning approach to implement portfolio pursuit. The reinforcement learning approach uses a *portfolio value function*, which quantifies the value of having a particular portfolio at a particular time. These values are known at the final time step. Moreover, we can use a  [Bellman equation](https://en.wikipedia.org/wiki/Bellman_equation) to find the values at any step, if we know the values at the next. Accordingly, to compute values everywhere, we can iterate backwards in time, starting with known values at the final step, and then using the Bellman equation to find values at the penultimate step, then the step before, and so on. This is the core of our reinforcement learning algorithm. Once we have value estimates everywhere, we train a neural network on those values. At inference, we use our value function to compute how a new customer will effect the value of the portfolio. Increased values leads to lower offers; deacreased values lead to higher offers. The full details of the training algorithm can be found in the paper. 
 
 ## License
 
