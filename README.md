@@ -2,16 +2,17 @@
 
 The codebase accompanies our [paper](https://arxiv.org/abs/2408.00713) applying reinforcement learning ideas to portfolio pursuit in the context of insurance markets. It is designed to allow other research to build on our research, replicate our results, and use the market environment for their own work. It is licensed under the a [CC BY-NC 4.0 license](https://creativecommons.org/licenses/by-nc/4.0/). 
 
-## Paper walk-through
+## Paper walk-through (Accenture internal use)
 
-We have created a series of videos which walk through the different sections of our paper. They can be found via the following links:
+for internal use at Accenture, we have created a series of videos which walk through the different sections of our paper.
+Accenture employees can find them via the following links:
 1. [Introduction and problem statement](https://mediaexchange.accenture.com/media/t/1_lf2w7w0l)
 2. [Problem formalism](https://mediaexchange.accenture.com/media/t/1_q6sit8p6)
 3. [Standard industry pipeline](https://mediaexchange.accenture.com/media/t/1_6tuoev6y)
 4. [Baseline method](https://mediaexchange.accenture.com/media/t/1_hbl2avdf)
-5. [RL method](https://mediaexchange.accenture.com/media/t/1_sbzm3go2)
-6. [Results](https://mediaexchange.accenture.com/media/t/1_x73thdor)
-7. [Limitations and further research](https://mediaexchange.accenture.com/media/t/1_avxrmwzm)
+6. [RL method](https://mediaexchange.accenture.com/media/t/1_sbzm3go2)
+7. [Results](https://mediaexchange.accenture.com/media/t/1_x73thdor)
+8. [Limitations and further research](https://mediaexchange.accenture.com/media/t/1_avxrmwzm)
 
 ## Motivation of the research 
 
