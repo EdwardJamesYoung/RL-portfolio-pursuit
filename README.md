@@ -4,7 +4,7 @@ The codebase accompanies our [paper](https://arxiv.org/abs/2408.00713) applying 
 
 ## Paper walk-through (Accenture internal use)
 
-for internal use at Accenture, we have created a series of videos which walk through the different sections of our paper.
+For internal use at Accenture we have created a series of videos which walk through the different sections of our paper.
 Accenture employees can find them via the following links:
 1. [Introduction and problem statement](https://mediaexchange.accenture.com/media/t/1_lf2w7w0l)
 2. [Problem formalism](https://mediaexchange.accenture.com/media/t/1_q6sit8p6)
